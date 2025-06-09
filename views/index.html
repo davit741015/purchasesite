@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('head.html') -%>
+</head>
+
+<body>
+    <%- include('header.html') -%>
+    <div class="container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px;">
+        <button id="gueb" style="position: static; margin: 40px auto 0 auto; display: block;">2ginal</button>
+    </div>
+    <%- include('footer.html') -%>
+    <script>
+      // Theme toggle logic
+      const toggleBtn = document.getElementById('theme-toggle');
+      const body = document.body;
+      function setTheme(mode) {
+        if (mode === 'light') {
+          body.classList.add('light-mode');
+          toggleBtn.textContent = '🌞';
+        } else {
+          body.classList.remove('light-mode');
+          toggleBtn.textContent = '🌙';
+        }
+        localStorage.setItem('theme', mode);
+      }
+      toggleBtn.addEventListener('click', () => {
+        const isLight = body.classList.toggle('light-mode');
+        setTheme(isLight ? 'light' : 'dark');
+      });
+      // On load
+      (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light') setTheme('light');
+        else setTheme('dark');
+      })();
+    </script>
+</body>
+
+</html>

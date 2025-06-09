@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('head.html') -%>
+  <style>
+    .report-container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(80, 0, 120, 0.08);
+      padding: 32px 24px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .report-label {
+      font-weight: bold;
+      color: #4b2067;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+    .report-input {
+      width: 100%;
+      max-width: 420px;
+      min-width: 200px;
+      height: 44px;
+      border-radius: 24px;
+      border: 1.5px solid #b39ddb;
+      padding: 0 18px;
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+      transition: border-color 0.3s;
+      background: #f8f8ff;
+    }
+    .report-input:focus {
+      border-color: #7c43bd;
+      outline: none;
+      background: #fff;
+    }
+    .report-btn {
+      width: 100%;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(120deg, #7c43bd, #8f5fd6, #e040fb);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(124, 67, 189, 0.15);
+      transition: background-position 0.4s, transform 0.2s, box-shadow 0.2s;
+    }
+    .report-btn:hover, .report-btn:focus {
+      background-position: 100% 0;
+      transform: scale(1.04);
+      box-shadow: 0 4px 16px rgba(124, 67, 189, 0.25);
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <%- include('header.html') -%>
+  <div class="report-container">
+    <h1>Report a Purchase</h1>
+    <form action="/report" method="POST">
+      <label for="purchase_link" class="report-label">
+        Paste the link of the purchase you are reporting:
+      </label>
+      <input
+        type="text"
+        id="purchase_link"
+        name="purchase_link"
+        class="report-input"
+        placeholder="Paste purchase link here..."
+        required
+        autocomplete="off"
+      >
+      <button type="submit" class="report-btn">Report Purchase</button>
+    </form>
+  </div>
+  <%- include('footer.html') -%>
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(mode) {
+      if (mode === 'light') {
+        body.classList.add('light-mode');
+        toggleBtn.textContent = '🌞';
+      } else {
+        body.classList.remove('light-mode');
+        toggleBtn.textContent = '🌙';
+      }
+      localStorage.setItem('theme', mode);
+    }
+    toggleBtn.addEventListener('click', () => {
+      const isLight = body.classList.toggle('light-mode');
+      setTheme(isLight ? 'light' : 'dark');
+    });
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') setTheme('light');
+      else setTheme('dark');
+    })();
+  </script>
+</body>
+</html>

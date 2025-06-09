@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/index.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8ff;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .ticket-container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(80, 0, 120, 0.08);
+      padding: 32px 24px 24px 24px;
+    }
+    h1 {
+      text-align: center;
+      color: #6c2eb7;
+      margin-bottom: 24px;
+    }
+    label {
+      font-weight: bold;
+      color: #4b2067;
+    }
+    textarea {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #b39ddb;
+      padding: 12px;
+      font-size: 1rem;
+      margin-top: 8px;
+      margin-bottom: 24px;
+      resize: vertical;
+      min-height: 80px;
+      transition: border-color 0.3s;
+    }
+    textarea:focus {
+      border-color: #7c43bd;
+      outline: none;
+    }
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 14px 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(120deg, #7c43bd, #8f5fd6, #e040fb);
+      background-size: 200% 200%;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(124, 67, 189, 0.15);
+      transition: 
+        background-position 0.4s cubic-bezier(.4,0,.2,1),
+        transform 0.2s cubic-bezier(.4,0,.2,1),
+        box-shadow 0.2s cubic-bezier(.4,0,.2,1);
+    }
+    .submit-btn:hover, .submit-btn:focus {
+      background-position: 100% 0;
+      transform: scale(1.04);
+      box-shadow: 0 4px 16px rgba(124, 67, 189, 0.25);
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <%- include('header.html') -%>
+  <div class="ticket-container">
+    <h1>Ticket Page</h1>
+    <form action="/ticket" method="post">
+      <label for="issue">Describe your issue:</label><br>
+      <textarea id="issue" name="issue" rows="4" placeholder="Type your issue here..."></textarea><br>
+      <button type="submit" class="submit-btn">Submit Ticket</button>
+    </form>
+  </div>
+  <%- include('footer.html') -%>
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    function setTheme(mode) {
+      if (mode === 'light') {
+        body.classList.add('light-mode');
+        toggleBtn.textContent = '🌞';
+      } else {
+        body.classList.remove('light-mode');
+        toggleBtn.textContent = '🌙';
+      }
+      localStorage.setItem('theme', mode);
+    }
+    toggleBtn.addEventListener('click', () => {
+      const isLight = body.classList.toggle('light-mode');
+      setTheme(isLight ? 'light' : 'dark');
+    });
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') setTheme('light');
+      else setTheme('dark');
+    })();
+  </script>
+</body>
+</html>
