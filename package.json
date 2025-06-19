@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "start:n": "nodemon app.js"
+    "start:n": "nodemon app.js",
+    "admin:n": "nodemon admin.js"
   },
   "author": "DavitC",
   "license": "ISC",

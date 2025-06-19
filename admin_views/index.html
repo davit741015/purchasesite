@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">Admin Dashboard</div>
+    <div class="navbar-links">
+      <a href="/">Home</a>
+      <a href="/Areport">Reports</a>
+    </div>
+  </nav>
+  <main>
+    <section class="card">
+      <h2>Users</h2>
+      <div id="users" class="user-list"></div>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 Admin Panel
+  </footer>
+  <script>
+    async function loadUsers() {
+      const res = await fetch('/admin/users');
+      const users = await res.json();
+      document.getElementById('users').innerHTML =
+        users.length
+          ? '<ul>' + users.map(u => '<li><span class="user-id">#' + u.id + '</span> <span class="user-name">' + u.name + '</span></li>').join('') + '</ul>'
+          : '<p>No users found.</p>';
+    }
+    loadUsers();
+  </script>
+</body>
+</html>

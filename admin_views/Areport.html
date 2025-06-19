@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Reports</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: repeating-linear-gradient(
+        135deg,
+        #f7f0fa,
+        #f7f0fa 40px,
+        #e0c3fc 40px,
+        #e0c3fc 80px
+      );
+    }
+    .navbar {
+      background: #5f2c82;
+      color: #fff;
+    }
+    .navbar-brand {
+      font-size: 1.7em;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 1px 2px 8px #a084ca44;
+    }
+    .navbar-links a {
+      color: #fff;
+      font-weight: 600;
+    }
+    .navbar-links a.active, .navbar-links a:hover {
+      color: #f7b42c;
+      text-decoration: underline;
+    }
+    .card {
+      background: #fff7fa;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(95,44,130,0.10);
+      border: 2px solid #e0c3fc;
+      padding: 2.5em 2em;
+      margin-bottom: 2em;
+    }
+    .card h2 {
+      color: #5f2c82;
+      border-bottom: 2px solid #e0c3fc;
+      padding-bottom: 0.5em;
+      margin-bottom: 1.5em;
+      letter-spacing: 1px;
+    }
+    .user-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .user-list li {
+      background: #f3e7fa;
+      border-radius: 10px;
+      margin-bottom: 1.2em;
+      padding: 1.2em 1em 1em 1em;
+      border-left: 5px solid #b993d6;
+      box-shadow: 0 2px 8px rgba(95,44,130,0.06);
+      transition: box-shadow 0.2s;
+    }
+    .user-list li:hover {
+      box-shadow: 0 4px 16px rgba(95,44,130,0.13);
+    }
+    .report-actions {
+      margin-top: 0.7em;
+    }
+    .report-actions button {
+      margin-right: 0.5em;
+      padding: 0.5em 1.3em;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      font-size: 1em;
+      box-shadow: 0 1px 4px #e0c3fc66;
+    }
+    .accept-btn { background: #43e97b; color: #222; }
+    .accept-btn:hover { background: #38b86c; color: #fff; transform: scale(1.05);}
+    .deny-btn { background: #fc466b; color: #fff; }
+    .deny-btn:hover { background: #b71c1c; transform: scale(1.05);}
+    .status-accepted { color: #43e97b; font-weight: bold; }
+    .status-denied { color: #fc466b; font-weight: bold; }
+    .status-pending { color: #b993d6; font-weight: bold; }
+    footer {
+      background: #5f2c82;
+      color: #fff;
+      margin-top: 3em;
+      letter-spacing: 1px;
+    }
+    @media (max-width: 600px) {
+      .card { padding: 1em 0.5em; }
+      .user-list li { padding: 1em 0.5em 0.8em 0.5em; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">Admin Reports Panel</div>
+    <div class="navbar-links">
+      <a href="/">Home</a>
+      <a href="/Areport" class="active">Reports</a>
+    </div>
+  </nav>
+  <main>
+    <section class="card">
+      <h2>Purchase Reports</h2>
+      <div id="reports" class="user-list"></div>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 Admin Panel
+  </footer>
+  <script>
+    async function loadReports() {
+      const res = await fetch('/admin/reports');
+      const reports = await res.json();
+      document.getElementById('reports').innerHTML =
+        reports.length
+          ? '<ul>' + reports.map(r => 
+              '<li>' +
+                '<div><b>Link:</b> <a href="' + r.purchase_link + '" target="_blank">' + r.purchase_link + '</a></div>' +
+                '<div><b>Reported at:</b> ' + (r.reported_at || '') + '</div>' +
+                '<div><b>Status:</b> <span class="status-' + r.status + '">' + r.status + '</span></div>' +
+                '<div class="report-actions">' +
+                  (r.status === 'pending'
+                    ? '<button class="accept-btn" onclick="updateReport(' + r.id + ',\'accept\')">Accept</button>' +
+                      '<button class="deny-btn" onclick="updateReport(' + r.id + ',\'deny\')">Deny</button>'
+                    : ''
+                  ) +
+                '</div>' +
+              '</li>'
+            ).join('') + '</ul>'
+          : '<p>No reports found.</p>';
+    }
+    async function updateReport(id, action) {
+      const res = await fetch('/admin/reports/' + id + '/' + action, { method: 'POST' });
+      if (res.ok) loadReports();
+      else alert('Failed to update report');
+    }
+    loadReports();
+  </script>
+</body>
+</html>

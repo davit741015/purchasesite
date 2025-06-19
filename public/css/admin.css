@@ -1,0 +1,96 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+
+.navbar {
+  background: #22223b;
+  color: #fff;
+  padding: 1em 2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 1.5em;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 1.5em;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.navbar-links a:hover {
+  color: #9a8c98;
+}
+
+main {
+  max-width: 700px;
+  margin: 2em auto;
+  padding: 1em;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(34,34,59,0.08);
+  padding: 2em;
+  margin-bottom: 2em;
+}
+
+.card h2 {
+  margin-top: 0;
+  color: #22223b;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+
+.user-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-list li {
+  padding: 0.75em 0.5em;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+}
+
+.user-list li:last-child {
+  border-bottom: none;
+}
+
+.user-id {
+  background: #9a8c98;
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.2em 0.7em;
+  margin-right: 1em;
+  font-size: 0.95em;
+}
+
+.user-name {
+  font-weight: 500;
+  color: #22223b;
+}
+
+footer {
+  text-align: center;
+  padding: 1.5em 0 1em 0;
+  background: #22223b;
+  color: #fff;
+  font-size: 1em;
+  margin-top: 3em;
+  letter-spacing: 1px;
+}
