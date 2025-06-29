@@ -86,6 +86,30 @@
     .status-accepted { color: #43e97b; font-weight: bold; }
     .status-denied { color: #fc466b; font-weight: bold; }
     .status-pending { color: #b993d6; font-weight: bold; }
+    .status-select {
+      margin-right: 0.5em;
+      padding: 0.3em 0.8em;
+      border-radius: 6px;
+      border: 1px solid #b993d6;
+      font-size: 1em;
+      background: #f7f0fa;
+      color: #5f2c82;
+    }
+    .set-status-btn {
+      background: #5f2c82;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      padding: 0.4em 1.2em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      margin-left: 0.3em;
+    }
+    .set-status-btn:hover {
+      background: #432c5f;
+      transform: scale(1.05);
+    }
     footer {
       background: #5f2c82;
       color: #fff;
@@ -122,25 +146,40 @@
       document.getElementById('reports').innerHTML =
         reports.length
           ? '<ul>' + reports.map(r => 
-              '<li>' +
-                '<div><b>Link:</b> <a href="' + r.purchase_link + '" target="_blank">' + r.purchase_link + '</a></div>' +
-                '<div><b>Reported at:</b> ' + (r.reported_at || '') + '</div>' +
-                '<div><b>Status:</b> <span class="status-' + r.status + '">' + r.status + '</span></div>' +
-                '<div class="report-actions">' +
-                  (r.status === 'pending'
-                    ? '<button class="accept-btn" onclick="updateReport(' + r.id + ',\'accept\')">Accept</button>' +
-                      '<button class="deny-btn" onclick="updateReport(' + r.id + ',\'deny\')">Deny</button>'
-                    : ''
-                  ) +
-                '</div>' +
-              '</li>'
+              `<li>
+                <div><b>Link:</b> <a href="${r.purchase_link}" target="_blank">${r.purchase_link}</a></div>
+                <div><b>Reported at:</b> ${r.reported_at || ''}</div>
+                <div><b>Status:</b> <span class="status-${r.status}">${r.status}</span></div>
+                <div class="report-actions">
+                  <select class="status-select" id="status-select-${r.id}">
+                    <option value="pending" ${r.status === 'pending' ? 'selected' : ''}>pending</option>
+                    <option value="accepted" ${r.status === 'accepted' ? 'selected' : ''}>accepted</option>
+                    <option value="denied" ${r.status === 'denied' ? 'selected' : ''}>denied</option>
+                  </select>
+                  <button class="set-status-btn" onclick="setStatus(${r.id})">Set Status</button>
+                </div>
+              </li>`
             ).join('') + '</ul>'
           : '<p>No reports found.</p>';
     }
-    async function updateReport(id, action) {
-      const res = await fetch('/admin/reports/' + id + '/' + action, { method: 'POST' });
-      if (res.ok) loadReports();
-      else alert('Failed to update report');
+    async function setStatus(id) {
+      const select = document.getElementById('status-select-' + id);
+      const status = select.value;
+      const res = await fetch('/admin/reports/' + id + '/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      });
+      if (res.ok) {
+        loadReports();
+      } else {
+        let msg = 'Failed to update status';
+        try {
+          const data = await res.json();
+          if (data && data.error) msg += ': ' + data.error;
+        } catch {}
+        alert(msg);
+      }
     }
     loadReports();
   </script>

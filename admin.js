@@ -8,6 +8,7 @@ app.use(vExpress.static(__dirname + '/public'));
 app.set('view engine', 'html');
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(vExpress.json()); // <-- Add this line to parse JSON bodies
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -31,7 +32,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// Admin reports dashboard page
+
 app.get('/Areport', (req, res) => {
   res.render('Areport', {
     title: 'Admin Reports'
@@ -55,10 +56,22 @@ app.post('/admin/reports/:id/accept', (req, res) => {
   });
 });
 
-// API: Deny a report
 app.post('/admin/reports/:id/deny', (req, res) => {
   const id = req.params.id;
   connection.query('UPDATE reports SET status = "denied" WHERE id = ?', [id], (err) => {
+    if (err) return res.status(500).json({ error: 'Database error' });
+    res.json({ success: true });
+  });
+});
+
+app.post('/admin/reports/:id/status', (req, res) => {
+  const id = req.params.id;
+  const { status } = req.body;
+  const allowed = ['pending', 'accepted', 'denied'];
+  if (!allowed.includes(status)) {
+    return res.status(400).json({ error: 'Invalid status' });
+  }
+  connection.query('UPDATE reports SET status = ? WHERE id = ?', [status, id], (err) => {
     if (err) return res.status(500).json({ error: 'Database error' });
     res.json({ success: true });
   });
