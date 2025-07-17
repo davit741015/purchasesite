@@ -1,7 +1,9 @@
 const mysql = require('mysql2');
-const vExpress = require('express')
-const app = vExpress()
-const port = 3000
+const vExpress = require('express');
+const app = vExpress();
+require('dotenv').config();
+
+const port = process.env.PORT || 3000; // Use environment variable or default to 3000
 app.engine('.html', require('ejs').__express);
 app.set('views', 'views');
 app.use(vExpress.static(__dirname + '/public'));
@@ -9,11 +11,14 @@ app.set('view engine', 'html');
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+
+
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '123456',
-  database: 'site'
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_user,
+  password: process.env.DB_password,
+  database: process.env.DB_name
 });
 
 connection.connect((err) => {
@@ -26,7 +31,9 @@ connection.connect((err) => {
 
 app.get('/users/register', (req, res) => {
   res.status(200).render('users/register', {
+    
     title: 'Register Page'
+    
   })
 });
 

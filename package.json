@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "learning from a tutorial",
   "dependencies": {
+    "dotenv": "^17.0.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "mysql2": "^3.14.1",
