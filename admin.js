@@ -8,7 +8,7 @@ app.use(vExpress.static(__dirname + '/public'));
 app.set('view engine', 'html');
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(vExpress.json()); // <-- Add this line to parse JSON bodies
+app.use(vExpress.json());
 
 const connection = mysql.createConnection({
   host: 'localhost',
