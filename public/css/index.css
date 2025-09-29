@@ -10,7 +10,7 @@
   font-family: Impact,'Arial Narrow Bold', sans-serif;
   margin: 40px auto 0 auto;
   display: block;
-  position: relative; /* Ensure ::before is relative to the button */
+  position: relative; 
 }
 
 #gueb::before {
@@ -24,7 +24,7 @@
   z-index: 0;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  pointer-events: none; /* Prevent ::before from blocking button events */
+  pointer-events: none; 
 }
 
 #gueb:hover::before {
@@ -32,7 +32,7 @@
 }
 
 #gueb:hover {
-  background-color: blueviolet; /* Keep original color on hover */
+  background-color: blueviolet; 
 }
 
 #plholder{
@@ -61,6 +61,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     background-color: #f4f4f4;
+    padding-top: 80px; 
+    padding-bottom: 80px; 
 }
 .container {
     max-width: 600px;
@@ -110,7 +112,7 @@ button:hover {
     border-radius: 10px;
 }
 
-/* Root theme variables */
+
 :root {
   --bg-gradient: linear-gradient(135deg, #18181b 0%, #23232b 50%, #111112 100%);
   --bg-gradient-light: linear-gradient(135deg, #f8f8ff 0%, #eaeaea 100%);
@@ -135,22 +137,37 @@ body {
   transition: background 0.4s, color 0.4s;
 }
 
-/* Light mode */
+
 body.light-mode {
   background: var(--bg-gradient-light);
   color: var(--text-color-light);
 }
 
 .main-header {
+  width: 100vw;
+  min-width: 100vw;
+  left: 0;
+  top: 0;
+  position: fixed;
   background: var(--header-bg);
-  padding: 24px 0 12px 0;
-  text-align: center;
+  padding: 0;
+  margin: 0;
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   transition: background 0.4s;
+  z-index: 101;
 }
 
 body.light-mode .main-header {
   background: var(--header-bg-light);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 12px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .site-title {
@@ -158,6 +175,7 @@ body.light-mode .main-header {
   font-size: 2.2rem;
   color: var(--accent);
   letter-spacing: 2px;
+  text-align: center;
 }
 
 .nav-links {
@@ -197,7 +215,7 @@ body.light-mode .nav-links a:hover, body.light-mode .nav-links a:focus {
   color: #fff;
 }
 
-/* Theme toggle button */
+
 #theme-toggle {
   margin-left: 24px;
   background: none;
@@ -223,17 +241,33 @@ body.light-mode .nav-links a:hover, body.light-mode .nav-links a:focus {
 }
 
 .main-footer {
+  width: 100vw;
+  min-width: 100vw;
+  left: 0;
+  bottom: 0;
+  position: fixed;
   background: var(--footer-bg);
   color: var(--text-color);
-  padding: 32px 0 16px 0;
+  padding: 0;
+  margin: 0;
   text-align: center;
-  margin-top: 48px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
   transition: background 0.4s, color 0.4s;
+  z-index: 101;
 }
 
 body.light-mode .main-footer {
   background: var(--footer-bg-light);
   color: var(--text-color-light);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .footer-links {

@@ -9,8 +9,14 @@ app.set('views', 'views');
 app.use(vExpress.static(__dirname + '/public'));
 app.set('view engine', 'html');
 const bodyParser = require('body-parser');
+app.use(bodyParser.json()); // Add JSON parsing middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Debugging middleware to log request headers
+app.use((req, res, next) => {
+  console.log('Request Headers:', req.headers);
+  next();
+});
 
 
 
@@ -31,14 +37,13 @@ connection.connect((err) => {
 
 app.get('/users/register', (req, res) => {
   res.status(200).render('users/register', {
-    
     title: 'Register Page'
-    
   })
 });
 
 app.post(`/users/register`, (req, res) => {
-  const { username, password, first_name, last_name, birthday, email,ticket,report } = req.body;
+  console.log('Request body:', req.body); // Debugging log
+  const { username, password, first_name, last_name, birthday, email } = req.body;
   const sql = 'INSERT INTO users (username, password, first_name, last_name, birthday, email, create_date) VALUES (?, ?, ?, ? , ?, ?, Now())';
   connection.query(sql, [username, password, first_name, last_name, birthday, email], (err, result) => {
     if (err) {
