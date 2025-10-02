@@ -9,14 +9,8 @@ app.set('views', 'views');
 app.use(vExpress.static(__dirname + '/public'));
 app.set('view engine', 'html');
 const bodyParser = require('body-parser');
-app.use(bodyParser.json()); // Add JSON parsing middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Debugging middleware to log request headers
-app.use((req, res, next) => {
-  console.log('Request Headers:', req.headers);
-  next();
-});
 
 
 
@@ -42,8 +36,8 @@ app.get('/users/register', (req, res) => {
 });
 
 app.post(`/users/register`, (req, res) => {
-  console.log('Request body:', req.body); // Debugging log
-  const { username, password, first_name, last_name, birthday, email } = req.body;
+  console.log('Request body:', req.body); 
+  const { username, password, first_name, last_name, birthday, email} = req.body;
   const sql = 'INSERT INTO users (username, password, first_name, last_name, birthday, email, create_date) VALUES (?, ?, ?, ? , ?, ?, Now())';
   connection.query(sql, [username, password, first_name, last_name, birthday, email], (err, result) => {
     if (err) {
@@ -51,6 +45,29 @@ app.post(`/users/register`, (req, res) => {
       return res.status(500).send('Error inserting data');
     }
     res.status(200).send('User registered successfully');
+  });
+});
+
+app.post(`/users/authorization`, (req, res) => {
+  console.log('Request body:', req.body); 
+  const { username, password} = req.body;
+  const sql = 'SELECT * FROM users WHERE  username=? and password=?';
+  connection.query(sql, [username, password], (err, result) => {
+    if (err) {
+      console.error('Error inserting data:', err.message);
+      return res.status(500).send('Error inserting data');
+    }
+    if (result.length === 0) {
+      return res.status(401).send('Invalid username or password');
+    }else{
+    res.status(200).send('User logged in successfully');
+    }
+  });
+});
+
+app.get('/users/authorization', (req, res) => {
+  res.status(200).render('users/authorization', {
+    title: 'Authorization Page'
   });
 });
 
