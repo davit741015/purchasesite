@@ -313,3 +313,7 @@ h1 {
 body.light-mode h1 {
   color: var(--accent-light);
 }
+
+.ticket-container {
+  margin: 60px auto;
+}
