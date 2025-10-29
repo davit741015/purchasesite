@@ -160,6 +160,29 @@ body.light-mode {
 body.light-mode .main-header {
   background: var(--header-bg-light);
 }
+.auth-left {
+  position: absolute;
+  left: 24px;
+  top: 18px;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  pointer-events: none; /* non-interactive */
+}
+
+.auth-badge {
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.6px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  /* gradient text */
+  background: linear-gradient(90deg, #7c43bd 0%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
 
 .header-inner {
   max-width: 1200px;

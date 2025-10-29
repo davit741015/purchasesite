@@ -1,4 +1,9 @@
 <header class="main-header">
+    <% if (authorized) { %>
+    <div class="auth-left">
+        <div class="auth-badge"><%= userName %></div>
+    </div>
+    <% } %>
     <div class="header-inner">
         <h1 class="site-title">Welcome to My Website</h1>
         <nav>

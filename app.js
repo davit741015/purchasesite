@@ -13,6 +13,18 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use((req, res, next) => {
+  try {
+    const userRec = req.cookies && req.cookies.userRec;
+    res.locals.userName = userRec || null;
+    res.locals.authorized = Boolean(userRec);
+  } catch (e) {
+    res.locals.userName = null;
+    res.locals.authorized = false;
+  }
+  next();
+});
+
 function tokenGenerator(user){
   
 }
