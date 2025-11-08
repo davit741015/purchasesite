@@ -81,28 +81,5 @@
     </form>
   </div>
   <%- include('footer.html') -%>
-  <script>
-    const toggleBtn = document.getElementById('theme-toggle');
-    const body = document.body;
-    function setTheme(mode) {
-      if (mode === 'light') {
-        body.classList.add('light-mode');
-        toggleBtn.textContent = '🌞';
-      } else {
-        body.classList.remove('light-mode');
-        toggleBtn.textContent = '🌙';
-      }
-      localStorage.setItem('theme', mode);
-    }
-    toggleBtn.addEventListener('click', () => {
-      const isLight = body.classList.toggle('light-mode');
-      setTheme(isLight ? 'light' : 'dark');
-    });
-    (function() {
-      const saved = localStorage.getItem('theme');
-      if (saved === 'light') setTheme('light');
-      else setTheme('dark');
-    })();
-  </script>
 </body>
 </html>

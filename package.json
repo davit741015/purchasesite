@@ -6,6 +6,7 @@
     "start:n": "nodemon app.js",
     "admin:n": "nodemon admin.js"
   },
+  "type": "module",
   "author": "DavitC",
   "license": "ISC",
   "description": "learning from a tutorial",
@@ -15,6 +16,7 @@
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "mysql2": "^3.14.1",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "path": "^0.12.7"
   }
 }

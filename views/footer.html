@@ -11,3 +11,39 @@
         </div>
     </div>
 </footer>
+<script>
+    (function() {
+        const toggleBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        function applyIcon(isLight) {
+            if (!toggleBtn) return;
+            toggleBtn.textContent = isLight ? '🌞' : '🌙';
+        }
+
+        function setTheme(mode) {
+            if (mode === 'light') body.classList.add('light-mode');
+            else body.classList.remove('light-mode');
+            localStorage.setItem('theme', mode);
+            applyIcon(mode === 'light');
+        }
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const isLight = body.classList.toggle('light-mode');
+                setTheme(isLight ? 'light' : 'dark');
+            });
+        }
+
+        // Initialize from saved preference (default: dark)
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light') setTheme('light');
+        else setTheme('dark');
+
+        // Make header height dynamic in case header size changes
+        const header = document.querySelector('.main-header');
+        if (header) {
+            document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+        }
+    })();
+</script>

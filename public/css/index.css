@@ -57,63 +57,8 @@
     font-family: Impact,'Arial Narrow Bold', sans-serif;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f4f4f4;
-    padding-top: 80px; 
-    padding-bottom: 80px; 
-}
-.container {
-    max-width: 600px;
-    margin: 50px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-h1 {
-    text-align: center;
-    color: #333;
-}
-form {
-    display: flex;
-    flex-direction: column;
-}
-label {
-    margin-top: 10px;
-    font-weight: bold;
-}
-input, textarea {
-    margin-top: 5px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
-button {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-#message{
-    border-radius: 10px;
-}
-
-
 :root {
+  --header-height: 96px;
   --bg-gradient: linear-gradient(135deg, #18181b 0%, #23232b 50%, #111112 100%);
   --bg-gradient-light: linear-gradient(135deg, #f8f8ff 0%, #eaeaea 100%);
   --header-bg: rgba(24, 24, 27, 0.95);
@@ -132,6 +77,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  padding-top: var(--header-height);
   background: var(--bg-gradient);
   color: var(--text-color);
   transition: background 0.4s, color 0.4s;
@@ -318,8 +264,79 @@ body.light-mode .main-footer {
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(80, 0, 120, 0.08);
   padding: 32px 24px 24px 24px;
-  margin: 60px auto;
+  margin: calc(var(--header-height) + 24px) auto 60px auto;
   max-width: 500px;
+}
+
+/* persistent dark panel for elements that should remain dark even in light mode */
+.dark-panel {
+  background: rgba(12,12,15,0.96) !important;
+  color: var(--text-color) !important;
+}
+/* keep dark-panel dark in light-mode too */
+body.light-mode .dark-panel {
+  background: rgba(12,12,15,0.96) !important;
+  color: var(--text-color) !important;
+}
+
+/* Purchase button styling */
+.purchase-btn {
+  margin-top: 16px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(120deg, #7c43bd, #8f5fd6);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.purchase-btn:hover { transform: translateY(-1px); }
+
+/* Contact / form controls inside .container */
+.container label {
+  display: block;
+  margin-top: 12px;
+  color: var(--text-color);
+  font-weight: 600;
+}
+.container input,
+.container textarea,
+.container select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-color);
+  box-sizing: border-box;
+}
+.container textarea { min-height: 120px; resize: vertical; }
+.container button[type="submit"] {
+  margin-top: 18px;
+  padding: 12px 18px;
+  background: linear-gradient(120deg, #7c43bd, #8f5fd6);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.container button[type="submit"]:hover { transform: translateY(-1px); }
+
+/* Light-mode overrides for form controls */
+body.light-mode .container label {
+  color: var(--text-color-light);
+}
+body.light-mode .container input,
+body.light-mode .container textarea,
+body.light-mode .container select {
+  background: #fff;
+  color: var(--text-color-light);
+  border: 1px solid #ddd;
+}
+body.light-mode .container button[type="submit"] {
+  color: #fff;
 }
 
 body.light-mode .container, body.light-mode .ticket-container {
